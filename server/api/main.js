@@ -20,7 +20,7 @@ app.use(cors())
 var port = process.env.PORT || 3000;
 
 //app.use(require('./api/find'))
-
+app.get('/', (req, res) => {res.send('ola api')})
 
 /* PORTS */
 

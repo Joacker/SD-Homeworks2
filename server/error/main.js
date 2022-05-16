@@ -21,6 +21,7 @@ var port = process.env.PORT || 5000;
 
 //app.use(require('./api/find'))
 
+app.get('/', (req, res) => {res.send('ola api-block')})
 
 /* PORTS */
 
