@@ -1,1 +1,1 @@
-CREATE table users(Id INT, username VARCHAR(100), password VARCHAR(100));
+CREATE table users(Id SERIAL, username VARCHAR(100), password VARCHAR(100));
