@@ -1,0 +1,79 @@
+###############-VERSION-###################
+version: '3.3'
+
+################-SERVICIOS-################
+services:
+
+###################-CLIENTE-###########################
+   cliente:
+    container_name: cliente
+    build: ./HW1/src/cli
+    depends_on:
+        - postgres
+        - servidor
+    ports:
+        - "4000:4000"
+    environment:
+        - REDIS_URL=redis://cache
+
+###################-SERVIDOR-#########################   
+   servidor:
+    container_name: servidor
+    build: ./HW1/src/server
+    depends_on:
+        - postgres
+        #- cache
+    environment:
+        - REDIS_URL=redis://cache
+
+###################-GRPC-#############################  
+   g_rpc:
+    container_name: g_rpc
+    build: ./HW1/src/GRPC
+    restart: always
+    depends_on:
+        - servidor
+        - cliente
+    ports:
+        - "5000:5000"
+    
+#################-POSTGRES-##########################
+   postgres:
+    container_name: postgres
+    image: docker.io/bitnami/postgresql:11
+    volumes:
+        - ./HW1/src/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+        - "3000:5432"
+    environment:
+        - POSTGRESQL_USER=postgres
+        - POSTGRESQL_DATABASE=tiendita
+        - ALLOW_EMPTY_PASSWORD=yes
+        - POSTGRESQL_PASSWORD=marihuana
+  
+######################-REDIS_SV-##########################
+   redis:
+    container_name: cache
+    image: redis:6.2.6
+    restart: always
+    ports:
+        - "6379:6379"
+    environment:
+      - REDIS_MAXMEMORY=1mb
+      - REDIS_MAXMEMORY_POLICY=allkeys-lru
+      - ALLOW_EMPTY_PASSWORD=yes
+    command: ["redis-server", "--bind", "redis","--maxmemory 2mb","--maxmemory-policy allkeys-lru"]
+
+######################-REDIS_CLI-##########################
+##################-OTRAS-PRUEBAS-###################
+
+#################################################    
+#   caching:
+#    image: bitnami/redis:6.0.16
+#    restart: always
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=yes
+#    volumes:
+#     - ./data/redis:/bitnami/redis/data
+#    ports:
+#      - "6379:3000"
