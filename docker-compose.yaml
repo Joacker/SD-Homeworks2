@@ -10,21 +10,11 @@ services:
     build: ./client
     depends_on:
         - postgres
-        - servidor
+        #- servidor
     ports:
         - "4000:4000"
     #environment:
     #    - REDIS_URL=redis://cache
-
-###################-SERVIDOR-#########################   
-   servidor:
-    container_name: servidor
-    build: ./server
-    depends_on:
-        - postgres
-    #environment:
-    #    - REDIS_URL=redis://cache
-
     
 #################-POSTGRES-##########################
    postgres:
@@ -33,7 +23,7 @@ services:
     volumes:
         - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-        - "3000:5432"
+        - "8000:5432"
     environment:
         - POSTGRESQL_USER=postgres
         - POSTGRESQL_DATABASE=membrillo
@@ -57,12 +47,12 @@ services:
     build:
       context: ./server/api/
       dockerfile: Dockerfile
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRESQL_PASSWORD: postgres
-      POSTGRESQL_DATABASE: membrillo
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
+    #environment:
+    #  POSTGRES_USER: myuser
+    #  POSTGRESQL_PASSWORD: postgres
+    #  POSTGRESQL_DATABASE: membrillo
+    #  POSTGRES_HOST: postgres
+    #  POSTGRES_PORT: 5432
     ports:
       - "3000:80"
     volumes:
@@ -77,12 +67,12 @@ services:
     build:
       context: ./server/error/
       dockerfile: Dockerfile
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
+    #environment:
+    #  POSTGRES_USER: postgres
+    #  POSTGRES_PASSWORD: membrillo
+    #  POSTGRES_DB: postgres
+    #  POSTGRES_HOST: postgres
+    #  POSTGRES_PORT: 5432
     ports:
       - "5000:80"
     volumes:

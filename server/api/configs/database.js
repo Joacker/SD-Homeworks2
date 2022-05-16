@@ -5,10 +5,10 @@ const Pool = require('pg').Pool
 
 /* ENVS */
 
-const poolGRPC = new Pool ({
+const poolApi = new Pool ({
     host: 'postgres',
     user: 'postgres',
-    password: 'salte_w_si_no_estas_bailando_con_ella_salte',
+    password: 'postgres',
     database: 'membrillo',
     port: '5432',
 });
@@ -16,5 +16,5 @@ const poolGRPC = new Pool ({
 
 
 module.exports = {
-    poolGRPC,
+    poolApi,
 };
