@@ -17,7 +17,7 @@ app.use(cors())
 
 /* VARIABLES */
 
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 5000;
 
 //app.use(require('./api/find'))
 
