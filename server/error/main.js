@@ -25,5 +25,5 @@ var port = process.env.PORT || 8000;
 /* PORTS */
 
 app.listen(port,()=>{
-    console.log(`Servidor de kafka-app corriendo en: http://localhost:${port}.`)
+    console.log(`API-Blocked run in: http://localhost:${port}.`)
 });
