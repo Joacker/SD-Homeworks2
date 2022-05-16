@@ -8,8 +8,8 @@ const Pool = require('pg').Pool
 const poolGRPC = new Pool ({
     host: 'postgres',
     user: 'postgres',
-    password: 'marihuana',
-    database: 'tiendita',
+    password: 'salte_w_si_no_estas_bailando_con_ella_salte',
+    database: 'membrillo',
     port: '5432',
 });
 

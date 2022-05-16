@@ -1,0 +1,1 @@
+CREATE table users(Id INT, username VARCHAR(100), password VARCHAR(100));
