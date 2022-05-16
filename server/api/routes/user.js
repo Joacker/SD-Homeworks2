@@ -2,8 +2,8 @@
 const { Router } = require('express')
 const express = require('express')
 const router = express.Router()
-const { getItems } = require('../controllers/consumer.controller')
-const { getRedis } = require('../controllers/consumer.controller')
+const { getItems } = require('./user.controller')
+const { getRedis } = require('./user.controller')
 
 /* APIS */
 /*router.post('/insert',DataInserted)*/

@@ -38,7 +38,7 @@ services:
         - POSTGRESQL_USER=postgres
         - POSTGRESQL_DATABASE=membrillo
         - ALLOW_EMPTY_PASSWORD=yes
-        - POSTGRESQL_PASSWORD=salte_w_si_no_estas_bailando_con_ella_salte
+        - POSTGRESQL_PASSWORD=postgres
 
 
 #################-zookeeper-############################
@@ -48,6 +48,48 @@ services:
       - '2181:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+
+
+#################-node-Api-############################
+   node-api:
+    container_name: api-login
+    restart: always
+    build:
+      context: ./server/api/
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRESQL_PASSWORD: postgres
+      POSTGRESQL_DATABASE: membrillo
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+    ports:
+      - "3000:80"
+    volumes:
+      - ./server/api:/usr/src/app
+    depends_on:
+      - "postgres"
+
+#################-node-Api-blocked-############################
+   node-api-blocked:
+    container_name: api-blocked
+    restart: always
+    build:
+      context: ./server/error/
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+    ports:
+      - "5000:80"
+    volumes:
+      - ./server/error:/usr/src/app
+    depends_on:
+      - "postgres"
+#################-kafka-############################
    kafka:
     image: 'bitnami/kafka:latest'
     ports:

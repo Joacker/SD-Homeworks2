@@ -20,48 +20,35 @@ command: ["redis-server", "--bind", "redis","--maxmemory 893300","--maxmemory-po
 ```
 
 2. Ingresar al docker exec del contenedor y entrar al cliente de Redis para luego editar la memoria maxima y la politica:
+
 ```bash
 docker exec -it <nombre_container> sh
 ```
+
 ```bash
 redis-cli -u redis://<nombre_container>
 ```
+
 ```bash
 CONFIG SET maxmemory <memoria_deseada>
 ```
+
 ```bash
 CONFIG SET maxmemory-policy <allkeys-lru /allkeys-lfu>
 ```
 
-
-**Tabla comparativa de algoritmos**
-
-Se utilizan dos algoritmos Least Recently Used (LRU) y Least Frequently Used (LFU), estos funcionan:
-
-1) Luego que el cliente realice una consulta distinta, esta se agrega al cache.
-2) Redis verifica el uso de la memoria y si es mayor que el maxmemory límite, expulsa las claves de acuerdo con la política.
-3) Se repite los pasos 1 y 2.
-
-Least Recently Used (LRU): Redis muestrea una pequeña cantidad de claves y expulsando la mejor (con el tiempo de acceso más antiguo) entre las claves muestreadas.
-
-Least Frequently Used (LFU): Redis intentará rastrear la frecuencia de acceso de los elementos, por lo que los que se usan con poca frecuencia se desalojan.
-
-
-Least Recently Used (LRU)        | Least Frequently Used (LFU)
----------------------------------| ---------------------------
-Elimina la data que no se haya solicitado recientemente.| Elimina la data de uso menos frecuente.
-Se utiliza cuando se quiere mantener los datos más populares (datos que se acceden una gran cantidad de veces en el momento). | Se utiliza cuando se quiere mantener los datos menos populares (datos que se acceden con menor frecuencia).
-Si un dato fue consultado varias veces, no se asegura que se mantenga en el cache. | Si un dato fue consultado varias veces, es bastante probable que se mantenga en el cache.
-
-**Metodo search**
+**Método search**
 
 El método search ejerce la acción de buscar en la base de datos o cache, dado un string.
+
 ```sh
 http://localhost:4000/inventory/search/?q=<palabra a buscar>
 ```
+
 **Finalmente para ejecutar el SW se recomienda usar el siguiente comando**
 
  ```bash
 docker-compose up
 ```
+
 Cabe hacer mención que unos cuantos scripts del trabajo son extraidos de ejemplos practicos vistos en ayudantía. Gracias por su atención.
