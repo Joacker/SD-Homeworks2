@@ -12,8 +12,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    #volumes:
-    #  - ./server/api:/usr/src/app
+    volumes:
+      - ./server/api:/app
 
 ###################-CLIENTE-###########################
    cliente:
@@ -43,8 +43,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
-    #volumes:
-    #  - ./server/error:/usr/src/app
+    volumes:
+      - ./server/error:/app/
 
 #################-kafka-############################
    kafka:
