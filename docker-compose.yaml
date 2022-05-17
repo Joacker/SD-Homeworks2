@@ -3,33 +3,27 @@ version: '3.3'
 
 ################-SERVICIOS-################
 services:
+#################-node-Api-############################
+   node-api:
+    container_name: api-login
+    restart: always
+    build:
+      context: ./server/api/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    #volumes:
+    #  - ./server/api:/usr/src/app
 
 ###################-CLIENTE-###########################
    cliente:
     container_name: cliente
     build: ./client
-    depends_on:
-        - postgres
-        #- servidor
     ports:
         - "4000:4000"
-    #environment:
-    #    - REDIS_URL=redis://cache
-    
-#################-POSTGRES-##########################
-   postgres:
-    container_name: postgres
-    image: docker.io/bitnami/postgresql:11
-    volumes:
-        - ./server/api/db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-        - "8000:5432"
-    environment:
-        - POSTGRESQL_USER=postgres
-        - POSTGRESQL_DATABASE=membrillo
-        - ALLOW_EMPTY_PASSWORD=yes
-        - POSTGRESQL_PASSWORD=postgres
-
+    depends_on:
+        - node-api
+        - node-api-blocked
 
 #################-zookeeper-############################
    zookeeper:
@@ -40,26 +34,6 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
 
 
-#################-node-Api-############################
-   node-api:
-    container_name: api-login
-    restart: always
-    build:
-      context: ./server/api/
-      dockerfile: Dockerfile
-    #environment:
-    #  POSTGRES_USER: myuser
-    #  POSTGRESQL_PASSWORD: postgres
-    #  POSTGRESQL_DATABASE: membrillo
-    #  POSTGRES_HOST: postgres
-    #  POSTGRES_PORT: 5432
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./server/api:/usr/src/app
-    depends_on:
-      - "postgres"
-
 #################-node-Api-blocked-############################
    node-api-blocked:
     container_name: api-blocked
@@ -67,18 +41,11 @@ services:
     build:
       context: ./server/error/
       dockerfile: Dockerfile
-    #environment:
-    #  POSTGRES_USER: postgres
-    #  POSTGRES_PASSWORD: membrillo
-    #  POSTGRES_DB: postgres
-    #  POSTGRES_HOST: postgres
-    #  POSTGRES_PORT: 5432
     ports:
       - "5000:5000"
-    volumes:
-      - ./server/error:/usr/src/app
-    depends_on:
-      - "postgres"
+    #volumes:
+    #  - ./server/error:/usr/src/app
+
 #################-kafka-############################
    kafka:
     image: 'bitnami/kafka:latest'
