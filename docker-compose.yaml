@@ -42,9 +42,9 @@ services:
       context: ./server/error/
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+       - "8000:8000"
     volumes:
-      - ./server/error:/app/
+       - ./server/error:/app/
 
 #################-kafka-############################
    kafka:
