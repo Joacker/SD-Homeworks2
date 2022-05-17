@@ -1,9 +1,9 @@
+'use strict';
 /* IMPORTS */
 const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
-const Kafka = require('node-rdkafka')
 
 //-------------------------------------------
 
@@ -18,9 +18,9 @@ app.use(bodyParser.json())
 app.use(cors())
 
 //kafka
-var consumer = new Kafka.KafkaConsumer({
+/*var consumer = new Kafka.KafkaConsumer({
 'group.id': 'kafka',
-'metadata.broker.list': 'kafka:9092',
+'metadata.broker.list': 'elkafka:9092',
 }, {});
 
 consumer.connect();
@@ -31,7 +31,7 @@ consumer.on('ready', () => {
   }).on('data', function(data) {
     console.log(`received message: ${eventType.fromBuffer(data.value)}`);
   });
-global.consumer = consumer;
+global.consumer = consumer;*/
 /* VARIABLES */
 
 var port = process.env.PORT || 8000;

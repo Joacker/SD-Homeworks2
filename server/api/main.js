@@ -1,9 +1,9 @@
 /* IMPORTS */
+'use strict';
 const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
-const Kafka = require('node-rdkafka')
 
 //-------------------------------------------
 
@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(cors())
 //kafka
-const stream = Kafka.Producer.createWriteStream({
-'metadata.broker.list': 'kafka:9092'
+/*const stream = Kafka.Producer.createWriteStream({
+'metadata.broker.list': 'elkafka:9092'
 }, {}, {
 topic: 'test'
 });
@@ -27,7 +27,7 @@ console.error('Error in our kafka stream');
 console.error(err);
 });
 global.stream =stream;
-
+*/
 /* VARIABLES */
 
 var port = process.env.PORT || 3000;

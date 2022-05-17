@@ -12,8 +12,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    volumes:
-      - ./server/api:/app
+    #volumes:
+    #  - ./server/api:/app
 
 ###################-CLIENTE-###########################
    cliente:
@@ -43,11 +43,12 @@ services:
       dockerfile: Dockerfile
     ports:
        - "8000:8000"
-    volumes:
-       - ./server/error:/app/
+    #volumes:
+    #   - ./server/error:/app/
 
 #################-kafka-############################
    kafka:
+    container_name: elkafka
     image: 'bitnami/kafka:latest'
     ports:
       - '9092:9092'
