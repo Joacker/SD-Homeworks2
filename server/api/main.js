@@ -24,38 +24,39 @@ var port = process.env.PORT || 3000;
 var host = process.env.PORT || '0.0.0.0';
 ///////////////////////////////////////////////////////////////
 
+var kafka = new Kafka({
+  clientId: "my-app",
+  brokers: ["kafka:9092"],
+});
+
 app.post("/login", (req, res) => {
   console.log("login");
   (async () => {
-    const kafka = new Kafka({
-      clientId: "my-app",
-      brokers: ["localhost:9092"],
-    });
-    const producer = kafka.producer();
-    const admin = kafka.admin();
-    await producer.connect();
-    await admin.connect();
-    await admin.createTopics({
-      waitForLeader: true,
-      topics: [{ 
-        topic: "test-topic", replicationFactor: 1 
-      }],
-    })
-    const { username, password } = req.body;
-    var time = Math.floor(new Date() / 1000);
-    let user = {
-      username: username,
-      password: password,
-      tiempo: time.toString()
-    }
-    await producer.send({
-      topic: "test-topic",
-      //value: JSON.stringify(user)
-      messages: [{ value: JSON.stringify(user) }],
-    })
-    await producer.disconnect();
-    await admin.disconnect();
-    res.json("ok");
+      const producer = kafka.producer();
+      const admin = kafka.admin();
+      await producer.connect();
+      await admin.connect();
+      await admin.createTopics({
+        waitForLeader: true,
+        topics: [{ 
+          topic: "test-topic", replicationFactor: 1 
+        }],
+      })
+      const { username, password } = req.body;
+      var time = Math.floor(new Date() / 1000);
+      let user = {
+        username: username,
+        password: password,
+        tiempo: time.toString()
+      }
+      await producer.send({
+        topic: "test-topic",
+        //value: JSON.stringify(user)
+        messages: [{ value: JSON.stringify(user) }],
+      })
+      await producer.disconnect();
+      await admin.disconnect();
+      res.json(user);
   })();
 });
 
@@ -66,11 +67,7 @@ app.post("/login", (req, res) => {
 
 
 //kafka
-const main = async () => {
-  const kafka = new Kafka({
-    clientId: "my-app",
-    brokers: ["localhost:9092"],
-  });
+/*const main = async () => {
   const producer = kafka.producer();
 
   await producer.connect();
@@ -88,7 +85,7 @@ const main = async () => {
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       console.log("ola");
-      /*var time = Math.floor(new Date() / 1000);
+      var time = Math.floor(new Date() / 1000);
       
       //users.users['guillermo'].tiempo = time.toString();
       //const {user} = reg.body;
@@ -103,14 +100,14 @@ const main = async () => {
         console.log(key, value);
         //keys.push(value.clave_entidad);
         //console.log(value.id_entidad,value.clave_entidad);
-      });*/
+      });
       console.log({
         value: message.value.toString(),
       });
     },
   });
 };
-//main();
+main();*/
 
 app.get("/", (req, res) => {
   res.send("ola api");
