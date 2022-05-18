@@ -1,7 +1,7 @@
 version: '3.1'
 
 networks:
-  app-tier:
+  lared:
     driver: bridge
 
 services:
@@ -11,7 +11,7 @@ services:
     depends_on:
       - security
     networks:
-       - app-tier
+       - lared
     ports:
       - "3000:3000"
         
@@ -19,25 +19,27 @@ services:
     container_name: api-blocked
     build: ./server/error
     networks:
-      - app-tier
+      - lared
     ports:
       - "8000:8000"
 
   zookeeper:
+    container_name: elzookeeper
     image: 'bitnami/zookeeper:latest'
     environment:
       ALLOW_ANONYMOUS_LOGIN: "yes"
     networks:
-      - app-tier
+      - lared
     ports:
       - 2181:2181
       - 2888:2888
       - 3888:3888
     
   kafka:
+    container_name: elkafka
     image: 'bitnami/kafka:latest'
     networks:
-     - app-tier
+     - lared
     depends_on:
       - zookeeper
     environment:
