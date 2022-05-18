@@ -15,4 +15,4 @@ RUN npm install express axios request@2.81.0 dotenv cors body-parser nodemon kaf
 # Bundle app source
 COPY . .
 EXPOSE 8000
-CMD [ "node", "main.js" ]
+CMD [ "npm", "start" ]

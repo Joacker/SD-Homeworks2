@@ -1,20 +1,24 @@
-'use strict'
-const avro = require('avsc');
+"use strict";
+const avro = require("avsc");
 
-const producer = avro.Type.forSchema({
-  type: 'record',
+const schema = avro.Type.forSchema({
+  type: "record",
   fields: [
     {
-      name: 'username',
-      type: 'string',
+      name: "username",
+      type: "string",
     },
     {
-      name: 'password',
-      type: 'string',
-    }
-  ]
-})
+      name: "password",
+      type: "string",
+    },
+    {
+      name: "date",
+      type: "string",
+    },
+  ],
+});
 
 module.exports = {
-  producer,
+  schema,
 };
