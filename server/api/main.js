@@ -35,13 +35,13 @@ app.post("/login", (req, res) => {
       const producer = kafka.producer();
       const admin = kafka.admin();
       await producer.connect();
-      await admin.connect();
-      await admin.createTopics({
-        waitForLeader: true,
-        topics: [{ 
-          topic: "test-topic", replicationFactor: 1 
-        }],
-      })
+      // await admin.connect();
+      // await admin.createTopics({
+      //   waitForLeader: true,
+      //   topics: [{ 
+      //     topic: "test-topic", replicationFactor: 1 
+      //   }],
+      // })
       const { username, password } = req.body;
       var time = Math.floor(new Date() / 1000);
       let user = {
@@ -55,10 +55,11 @@ app.post("/login", (req, res) => {
         messages: [{ value: JSON.stringify(user) }],
       })
       await producer.disconnect();
-      await admin.disconnect();
+      //await admin.disconnect();
       res.json(user);
   })();
 });
+
 
 
   ///////////////////////////////////////////////////////////////  

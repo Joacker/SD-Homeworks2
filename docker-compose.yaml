@@ -8,8 +8,8 @@ services:
   node-api:
     container_name: api-login
     build: ./server/api
-    depends_on:
-      - security
+    # depends_on:
+    #   - security
     networks:
        - lared
     ports:
