@@ -54,8 +54,10 @@ app.get('/', (req, res) => {
   res.send('ola api-block')
   main();
 })
-
-
+var value = null
+var json = {}
+var registro = {};
+var bloqueados = {};
 
 const main = async () => {
   console.log("Entra main")
@@ -65,9 +67,13 @@ const main = async () => {
 
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
+      let array = []
+      value = message.value
       console.log({
         value: message.value.toString(),
       })
+      json = JSON.parse(value)
+      console.log(json)
     },
   })
   run().catch(console.error)

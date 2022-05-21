@@ -8,8 +8,10 @@ services:
   node-api:
     container_name: api-login
     build: ./server/api
-    # depends_on:
-    #   - security
+    depends_on:
+       - node-api-blocked
+    # volumes:
+    #   - './server/api:/app/main.js'
     networks:
        - lared
     ports:
@@ -18,6 +20,8 @@ services:
   node-api-blocked:
     container_name: api-blocked
     build: ./server/error
+    # volumes:
+    #   - './server/error:/app/main.js'
     networks:
       - lared
     ports:
