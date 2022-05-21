@@ -57,7 +57,7 @@ app.get('/', (req, res) => {
 var value = null
 var json = {}
 var registro = {};
-var bloqueados = {};
+var bloqueados = [];
 
 const main = async () => {
   console.log("Entra main")
@@ -67,18 +67,45 @@ const main = async () => {
 
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
-      let array = []
       value = message.value
       console.log({
         value: message.value.toString(),
       })
       json = JSON.parse(value)
-      console.log(json)
+      //console.log(json["tiempo"])
+      let find = json["username"]
+      if(bloqueados.includes(json["username"]))
+      {
+        let word = json["username"]
+        //res.json(word+" bloqueado")
+        console.log("ta bloqueado sorry :(")
+        //return
+      }else{
+        if(!(json["username"] in registro)){
+          var array = []
+          registro[json["username"]] = array
+          registro[json["username"]].push(json["tiempo"])
+        }else{
+          registro[json["username"]].push(json["tiempo"])
+        }
+        //console.log(registro[json["username"]])
+        //console.log(registro[json["username"]].length)
+        if(registro[json["username"]].length >= 5 && registro[json["username"]][registro[json["username"]].length -1] - registro[json["username"]][registro[json["username"]].length -5] <60){
+          //console.log(registro[json["username"]][registro[json["username"]].length -1] - registro[json["username"]][registro[json["username"]].length -5])
+          console.log("Bloqueado")
+          bloqueados.push(json["username"])
+          console.log(bloqueados)
+        }
+      }
     },
   })
   run().catch(console.error)
 };
 
+
+app.get('/blocked', (req, res) => {
+  res.send(bloqueados)
+})
 /* PORTS */
 
 app.listen(port,host,()=>{
