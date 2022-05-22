@@ -10,8 +10,8 @@ services:
     build: ./server/api
     depends_on:
        - node-api-blocked
-    # volumes:
-    #   - './server/api:/app/main.js'
+    volumes:
+       - './server/api:/usr/src/app'
     networks:
        - lared
     ports:
@@ -20,10 +20,11 @@ services:
   node-api-blocked:
     container_name: api-blocked
     build: ./server/error
-    # volumes:
-    #   - './server/error:/app/main.js'
     networks:
       - lared
+    volumes:
+      - ./server/error:/usr/src/app
+
     ports:
       - "8000:8000"
 

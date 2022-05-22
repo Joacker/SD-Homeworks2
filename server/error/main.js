@@ -99,10 +99,10 @@ const main = async () => {
       }
     },
   })
-  run().catch(console.error)
+  .catch(console.error)
 };
 
-
+//asdlaskdj
 app.get('/blocked', (req, res) => {
   res.send(bloqueados)
 })
@@ -110,4 +110,5 @@ app.get('/blocked', (req, res) => {
 
 app.listen(port,host,()=>{
     console.log(`API-Blocked run in: http://localhost:${port}.`)
+    main();
 });
