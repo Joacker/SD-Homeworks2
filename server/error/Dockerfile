@@ -11,8 +11,8 @@ COPY package*.json ./
 RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
-RUN npm install express axios request@2.81.0 dotenv cors body-parser nodemon kafkajs avsc
+RUN npm install express axios request@2.81.0 dotenv cors body-parser kafkajs avsc
 # Bundle app source
 COPY . .
 EXPOSE 8000
-CMD [ "npm", "start" ]
+CMD ["node", "main.js" ]

@@ -110,5 +110,5 @@ app.get('/blocked', (req, res) => {
 
 app.listen(port,host,()=>{
     console.log(`API-Blocked run in: http://localhost:${port}.`)
-    main();
+    main()
 });
